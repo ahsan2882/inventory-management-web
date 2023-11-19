@@ -1,0 +1,138 @@
+<div class="wrapper">
+  <div class="signup-container">
+    <h2>Create an Account</h2>
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label
+          for="username"
+          [ngClass]="{
+            error: usernameControl.invalid && usernameControl.touched
+          }"
+          >Username:
+          <span
+            *ngIf="usernameControl.invalid && usernameControl.touched"
+            class="error-message"
+          >
+            * Username must be at least 6 characters
+          </span></label
+        >
+        <input
+          type="text"
+          id="username"
+          formControlName="username"
+          [ngClass]="{
+            'error-input': usernameControl.invalid && usernameControl.touched
+          }"
+        />
+      </div>
+      <div class="form-group">
+        <label
+          for="email"
+          [ngClass]="{ error: emailControl.invalid && emailControl.touched }"
+          >Email:
+          <span
+            *ngIf="emailControl.invalid && emailControl.touched"
+            class="error-message"
+          >
+            * Valid email is required
+          </span></label
+        >
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          [ngClass]="{
+            'error-input': emailControl.invalid && emailControl.touched
+          }"
+        />
+      </div>
+      <div class="form-group">
+        <label
+          for="fullName"
+          [ngClass]="{
+            error: fullNameControl.invalid && fullNameControl.touched
+          }"
+          >Full Name:
+          <span
+            *ngIf="fullNameControl.invalid && fullNameControl.touched"
+            class="error-message"
+          >
+            * Full Name must have at least 3 characters
+          </span></label
+        >
+        <input
+          type="text"
+          id="fullName"
+          formControlName="fullName"
+          [ngClass]="{
+            'error-input': fullNameControl.invalid && fullNameControl.touched
+          }"
+        />
+      </div>
+      <div class="form-group">
+        <label
+          for="password"
+          [ngClass]="{
+            error: passwordControl.invalid && passwordControl.touched
+          }"
+          >Password:</label
+        >
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          [ngClass]="{
+            'error-input': passwordControl.invalid && passwordControl.touched
+          }"
+        />
+        <span
+          *ngIf="passwordControl.invalid && passwordControl.touched"
+          class="error-message"
+        >
+          * Password and should contain at least 8 characters: atleast 1
+          uppercase, atleast 3 digits, and atleast 3 special characters
+        </span>
+      </div>
+      <div class="form-group">
+        <label
+          for="confirmPassword"
+          [ngClass]="{
+            error:
+              signupForm.hasError('mismatch') && confirmPasswordControl.touched
+          }"
+          >Confirm Password:
+          <span
+            *ngIf="
+              signupForm.hasError('mismatch') && confirmPasswordControl.touched
+            "
+            class="error-message"
+          >
+            * Passwords do not match
+          </span></label
+        >
+        <input
+          type="password"
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          [ngClass]="{
+            'error-input':
+              signupForm.hasError('mismatch') && confirmPasswordControl.touched
+          }"
+        />
+      </div>
+      <button
+        class="signupButton"
+        type="submit"
+        [disabled]="signupForm.invalid"
+      >
+        Sign Up
+      </button>
+    </form>
+    <div class="login-container">
+      <p>Already have an account?</p>
+      <button type="button" class="login-button" (click)="goToLogin()">
+        Login
+      </button>
+    </div>
+  </div>
+</div>
