@@ -1,7 +1,7 @@
 <div class="wrapper">
-  <div class="signup-container">
+  <div class="signup-container" *ngIf="!showCodeInput; else showFormForCode">
     <h2>Create an Account</h2>
-    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()">
       <div class="form-group">
         <label
           for="username"
@@ -10,18 +10,35 @@
           }"
           >Username:
           <span
-            *ngIf="usernameControl.invalid && usernameControl.touched"
+            *ngIf="
+              usernameControl.invalid &&
+              usernameControl.touched &&
+              (usernameControl.hasError('minlength') ||
+                usernameControl.hasError('required'))
+            "
             class="error-message"
           >
             * Username must be at least 6 characters
-          </span></label
-        >
+          </span>
+          <span
+            class="error-message"
+            *ngIf="
+              usernameControl.invalid &&
+              usernameControl.touched &&
+              usernameControl.hasError('unavailable')
+            "
+            >The username is already taken</span
+          >
+        </label>
         <input
           type="text"
           id="username"
           formControlName="username"
           [ngClass]="{
-            'error-input': usernameControl.invalid && usernameControl.touched
+            'error-input':
+              usernameControl.invalid &&
+              usernameControl.touched &&
+              usernameControl.hasError('unavailable')
           }"
         />
       </div>
@@ -31,12 +48,26 @@
           [ngClass]="{ error: emailControl.invalid && emailControl.touched }"
           >Email:
           <span
-            *ngIf="emailControl.invalid && emailControl.touched"
+            *ngIf="
+              emailControl.invalid &&
+              emailControl.touched &&
+              (emailControl.hasError('pattern') ||
+                emailControl.hasError('required'))
+            "
             class="error-message"
           >
             * Valid email is required
-          </span></label
-        >
+          </span>
+          <span
+            class="error-message"
+            *ngIf="
+              emailControl.invalid &&
+              emailControl.touched &&
+              emailControl.hasError('unavailable')
+            "
+            >An account already exists with this email</span
+          >
+        </label>
         <input
           type="email"
           id="email"
@@ -135,4 +166,76 @@
       </button>
     </div>
   </div>
+  <ng-template #showFormForCode>
+    <div class="code-container">
+      <form [formGroup]="codeValidationForm" (ngSubmit)="validateCode()">
+        <div class="form-group">
+          <label
+            >Enter the 8 digit code sent to you email ({{
+              userData.email
+            }}):</label
+          >
+          <input
+            type="text"
+            name="codeInput"
+            id="codeInput"
+            formControlName="codeControl"
+            placeholder="00000000"
+            inputmode="numeric"
+            [maxLength]="8"
+            [minlength]="8"
+            [ngClass]="{
+              'error-input':
+                validationCodeControl.invalid &&
+                validationCodeControl.touched &&
+                validationCodeControl.hasError('invalidCode')
+            }"
+          />
+          <span
+            *ngIf="
+              validationCodeControl.invalid &&
+              validationCodeControl.touched &&
+              validationCodeControl.hasError('invalidCode') &&
+              !validationCodeControl.hasError('expired')
+            "
+            class="error-message"
+          >
+            * The code you entered is invalid
+          </span>
+          <p
+            *ngIf="
+              validationCodeControl.invalid &&
+              validationCodeControl.touched &&
+              validationCodeControl.hasError('invalidCode') &&
+              validationCodeControl.hasError('expired')
+            "
+            class="error-message"
+          >
+            * The code you entered has expired.
+            <span class="no-error"
+              >Another email has been sent to you with a new validation
+              code</span
+            >
+          </p>
+        </div>
+        <button
+          type="submit"
+          class="validate-button"
+          [disabled]="codeValidationForm.invalid"
+        >
+          Validate
+        </button>
+        <div class="resend-section">
+          <p>Didn't receive any email?</p>
+          <button
+            type="button"
+            class="resend-code"
+            (click)="resendValidationCode()"
+          >
+            Resend email
+          </button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
 </div>

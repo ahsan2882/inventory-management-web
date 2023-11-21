@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { LoginService } from 'src/app/services/loginService/login.service';
+import { ValidationService } from 'src/app/services/validationService/validation.service';
 import { debounceTime } from 'rxjs';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-login',
@@ -18,11 +19,12 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private loginService: LoginService
+    private validationService: ValidationService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
-    if (this.loginService.validateLoginStatus()) {
+    if (this.validationService.validateLoginStatus()) {
       this.router.navigate(['/home']);
     }
     this.loginForm = this.fb.group({
@@ -53,7 +55,7 @@ export class LoginComponent implements OnInit {
         authBody = { userName: this.emailOrUsernameControl.value };
       }
       authBody = { ...authBody, password: this.passwordControl.value };
-      this.loginService.loginUser(authBody).subscribe({
+      this.userService.loginUser$(authBody).subscribe({
         next: (res) => {
           sessionStorage.setItem('token', res.token);
           this.router.navigate(['/home']);
