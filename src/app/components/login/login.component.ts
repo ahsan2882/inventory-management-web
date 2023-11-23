@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ValidationService } from 'src/app/services/validationService/validation.service';
@@ -17,7 +22,6 @@ export class LoginComponent implements OnInit {
   userNameOrEmailError: string = '';
 
   constructor(
-    private fb: FormBuilder,
     private router: Router,
     private validationService: ValidationService,
     private userService: UserService
@@ -27,9 +31,9 @@ export class LoginComponent implements OnInit {
     if (this.validationService.validateLoginStatus()) {
       this.router.navigate(['/home']);
     }
-    this.loginForm = this.fb.group({
-      emailOrUsername: ['', Validators.required],
-      password: ['', Validators.required],
+    this.loginForm = new FormGroup({
+      usernameOrEmail: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
     });
     this.loginForm.valueChanges.pipe(debounceTime(300)).subscribe(() => {
       this.passwordError = '';
@@ -46,15 +50,17 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if (this.emailOrUsernameControl?.value && this.passwordControl?.value) {
-      const isEmail = this.emailOrUsernameControl.value.includes('@');
+    const emailOrUserName = this.emailOrUsernameControl?.value;
+    const passwordValue = this.passwordControl?.value;
+    if (emailOrUserName && passwordValue) {
+      const isEmail = emailOrUserName.includes('@');
       let authBody;
       if (isEmail) {
-        authBody = { email: this.emailOrUsernameControl.value };
+        authBody = { email: emailOrUserName };
       } else {
-        authBody = { userName: this.emailOrUsernameControl.value };
+        authBody = { userName: emailOrUserName };
       }
-      authBody = { ...authBody, password: this.passwordControl.value };
+      authBody = { ...authBody, password: passwordValue };
       this.userService.loginUser$(authBody).subscribe({
         next: (res) => {
           sessionStorage.setItem('token', res.token);

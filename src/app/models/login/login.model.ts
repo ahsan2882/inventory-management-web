@@ -1,8 +1,3 @@
-export interface LoginStatus {
-  id: string;
-  isLoggedIn: boolean;
-}
-
 export interface LoginBody {
   userName?: string;
   email?: string;
