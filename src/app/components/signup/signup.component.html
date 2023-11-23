@@ -1,12 +1,18 @@
-<div class="wrapper">
-  <div class="signup-container" *ngIf="!showCodeInput; else showFormForCode">
-    <h2>Create an Account</h2>
+<div
+  class="bg-gradient-to-b from-purple-300 via-violet-600 to-blue-300 flex flex-col justify-center items-center overflow-hidden min-h-screen"
+>
+  <div
+    class="signup-container max-w-2xl w-full h-full min-h-fit my-0 mx-auto text-center p-12 rounded-lg bg-gradient-to-br from-indigo-600 via-cyan-700 to-blue-500 shadow-md text-white"
+    *ngIf="!showCodeInput; else showFormForCode"
+  >
+    <h2 class="text-2xl m-0 pt-11 mb-5">Create an Account</h2>
     <form [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()">
-      <div class="form-group">
+      <div class="mb-4 mx-24">
         <label
+          class="block text-left mb-1.5 text-white"
           for="username"
           [ngClass]="{
-            error: usernameControl.invalid && usernameControl.touched
+            'text-red-500': usernameControl.invalid && usernameControl.touched
           }"
           >Username:
           <span
@@ -16,12 +22,12 @@
               (usernameControl.hasError('minlength') ||
                 usernameControl.hasError('required'))
             "
-            class="error-message"
+            class="text-red-500 inline-block text-left mt-1.5 text-sm"
           >
             * Username must be at least 6 characters
           </span>
           <span
-            class="error-message"
+            class="text-red-500 inline-block text-left mt-1.5 text-sm"
             *ngIf="
               usernameControl.invalid &&
               usernameControl.touched &&
@@ -35,17 +41,21 @@
           id="username"
           formControlName="username"
           [ngClass]="{
-            'error-input':
+            'border border-solid border-red-500 outline-1 outline outline-red-500':
               usernameControl.invalid &&
               usernameControl.touched &&
               usernameControl.hasError('unavailable')
           }"
+          class="w-full p-2.5 mt-1.5 box-border border border-solid border-slate-50 rounded text-base bg-slate-200 text-gray-900 focus:outline-none focus-within:border-green-500"
         />
       </div>
-      <div class="form-group">
+      <div class="mb-4 mx-24">
         <label
+          class="block text-left mb-1.5 text-white"
           for="email"
-          [ngClass]="{ error: emailControl.invalid && emailControl.touched }"
+          [ngClass]="{
+            'text-red-500': emailControl.invalid && emailControl.touched
+          }"
           >Email:
           <span
             *ngIf="
@@ -54,12 +64,12 @@
               (emailControl.hasError('pattern') ||
                 emailControl.hasError('required'))
             "
-            class="error-message"
+            class="text-red-500 inline-block text-left mt-1.5 text-sm"
           >
             * Valid email is required
           </span>
           <span
-            class="error-message"
+            class="text-red-500 inline-block text-left mt-1.5 text-sm"
             *ngIf="
               emailControl.invalid &&
               emailControl.touched &&
@@ -73,20 +83,23 @@
           id="email"
           formControlName="email"
           [ngClass]="{
-            'error-input': emailControl.invalid && emailControl.touched
+            'border border-solid border-red-500 outline-1 outline outline-red-500':
+              emailControl.invalid && emailControl.touched
           }"
+          class="w-full p-2.5 mt-1.5 box-border border border-solid border-slate-50 rounded text-base bg-slate-200 text-gray-900 focus:outline-none focus-within:border-green-500"
         />
       </div>
-      <div class="form-group">
+      <div class="mb-4 mx-24">
         <label
+          class="block text-left mb-1.5 text-white"
           for="fullName"
           [ngClass]="{
-            error: fullNameControl.invalid && fullNameControl.touched
+            'text-red-500': fullNameControl.invalid && fullNameControl.touched
           }"
           >Full Name:
           <span
             *ngIf="fullNameControl.invalid && fullNameControl.touched"
-            class="error-message"
+            class="text-red-500 inline-block text-left mt-1.5 text-sm"
           >
             * Full Name must have at least 3 characters
           </span></label
@@ -96,15 +109,18 @@
           id="fullName"
           formControlName="fullName"
           [ngClass]="{
-            'error-input': fullNameControl.invalid && fullNameControl.touched
+            'border border-solid border-red-500 outline-1 outline outline-red-500':
+              fullNameControl.invalid && fullNameControl.touched
           }"
+          class="w-full p-2.5 mt-1.5 box-border border border-solid border-slate-50 rounded text-base bg-slate-200 text-gray-900 focus:outline-none focus-within:border-green-500"
         />
       </div>
-      <div class="form-group">
+      <div class="mb-4 mx-24">
         <label
+          class="block text-left mb-1.5 text-white"
           for="password"
           [ngClass]="{
-            error: passwordControl.invalid && passwordControl.touched
+            'text-red-500': passwordControl.invalid && passwordControl.touched
           }"
           >Password:</label
         >
@@ -113,22 +129,25 @@
           id="password"
           formControlName="password"
           [ngClass]="{
-            'error-input': passwordControl.invalid && passwordControl.touched
+            'border border-solid border-red-500 outline-1 outline outline-red-500':
+              passwordControl.invalid && passwordControl.touched
           }"
+          class="w-full p-2.5 mt-1.5 box-border border border-solid border-slate-50 rounded text-base bg-slate-200 text-gray-900 focus:outline-none focus-within:border-green-500"
         />
         <span
           *ngIf="passwordControl.invalid && passwordControl.touched"
-          class="error-message"
+          class="text-red-500 inline-block text-left mt-1.5 text-sm"
         >
           * Password and should contain at least 8 characters: atleast 1
           uppercase, atleast 3 digits, and atleast 3 special characters
         </span>
       </div>
-      <div class="form-group">
+      <div class="mb-4 mx-24">
         <label
+          class="block text-left mb-1.5 text-white"
           for="confirmPassword"
           [ngClass]="{
-            error:
+            'text-red-500':
               signupForm.hasError('mismatch') && confirmPasswordControl.touched
           }"
           >Confirm Password:
@@ -136,7 +155,7 @@
             *ngIf="
               signupForm.hasError('mismatch') && confirmPasswordControl.touched
             "
-            class="error-message"
+            class="text-red-500 inline-block text-left mt-1.5 text-sm"
           >
             * Passwords do not match
           </span></label
@@ -146,31 +165,38 @@
           id="confirmPassword"
           formControlName="confirmPassword"
           [ngClass]="{
-            'error-input':
+            'border border-solid border-red-500 outline-1 outline outline-red-500':
               signupForm.hasError('mismatch') && confirmPasswordControl.touched
           }"
+          class="w-full p-2.5 mt-1.5 box-border border border-solid border-slate-50 rounded text-base bg-slate-200 text-gray-900 focus:outline-none focus-within:border-green-500"
         />
       </div>
       <button
-        class="signupButton"
+        class="signupButton py-3 px-6 text-white w-1/2 border-none cursor-pointer rounded-3xl text-base transition-colors duration-300 ease-linear mt-5 enabled:bg-red-900 enabled:hover:bg-red-700 disabled:bg-white disabled:text-slate-700 disabled:cursor-not-allowed"
         type="submit"
         [disabled]="signupForm.invalid"
       >
         Sign Up
       </button>
     </form>
-    <div class="login-container">
+    <div class="mt-5 text-center text-white">
       <p>Already have an account?</p>
-      <button type="button" class="login-button" (click)="goToLogin()">
+      <button
+        type="button"
+        class="login-button py-3 px-6 bg-black text-white w-1/2 border-none cursor-pointer rounded-3xl text-base transition-colors duration-300 ease-linear mt-5 hover:bg-slate-700"
+        (click)="goToLogin()"
+      >
         Login
       </button>
     </div>
   </div>
   <ng-template #showFormForCode>
-    <div class="code-container">
+    <div
+      class="code-container max-w-2xl w-full h-full min-h-fit my-0 mx-auto text-center p-12 rounded-lg bg-gradient-to-br from-yellow-200 via-emerald-200 to-green-300 shadow-md text-white flex flex-col justify-center items-center"
+    >
       <form [formGroup]="codeValidationForm" (ngSubmit)="validateCode()">
-        <div class="form-group">
-          <label
+        <div class="mb-4 mx-24">
+          <label class="block text-left mb-1.5 font-bold text-white"
             >Enter the 8 digit code sent to you email ({{
               userData.email
             }}):</label
@@ -185,11 +211,12 @@
             [maxLength]="8"
             [minlength]="8"
             [ngClass]="{
-              'error-input':
+              'border border-solid border-red-500 outline-1 outline outline-red-500':
                 validationCodeControl.invalid &&
                 validationCodeControl.touched &&
                 validationCodeControl.hasError('invalidCode')
             }"
+            class="w-full p-2.5 mt-1.5 box-border border border-solid border-slate-50 rounded text-base bg-slate-200 text-gray-900 focus:outline-none focus-within:border-green-500"
           />
           <span
             *ngIf="
@@ -198,7 +225,7 @@
               validationCodeControl.hasError('invalidCode') &&
               !validationCodeControl.hasError('expired')
             "
-            class="error-message"
+            class="text-red-500 font-bold inline-block text-left mt-1.5 text-sm"
           >
             * The code you entered is invalid
           </span>
@@ -209,10 +236,10 @@
               validationCodeControl.hasError('invalidCode') &&
               validationCodeControl.hasError('expired')
             "
-            class="error-message"
+            class="text-red-500 font-bold inline-block text-left mt-1.5 text-sm"
           >
             * The code you entered has expired.
-            <span class="no-error"
+            <span class="text-white"
               >Another email has been sent to you with a new validation
               code</span
             >
@@ -220,12 +247,12 @@
         </div>
         <button
           type="submit"
-          class="validate-button"
+          class="validate-button py-3 px-6 text-white w-3/5 border-none cursor-pointer rounded-3xl text-base transition-colors duration-300 ease-linear mt-5 disabled:bg-slate-200 disabled:text-slate-600 disabled:cursor-not-allowed enabled:bg-black enabled:hover:bg-slate-700"
           [disabled]="codeValidationForm.invalid"
         >
           Validate
         </button>
-        <div class="resend-section">
+        <div class="mt-5">
           <p>Didn't receive any email?</p>
           <button
             type="button"

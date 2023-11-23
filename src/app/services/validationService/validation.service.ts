@@ -23,6 +23,10 @@ export class ValidationService {
     return !!sessionStorage.getItem('token');
   }
 
+  fetchAuthToken(): string | null {
+    return sessionStorage.getItem('token');
+  }
+
   sendEmailForValidation$(
     email: string,
     fullName: string

@@ -1,40 +1,64 @@
-<div class="wrapper">
-  <div class="login-container">
-    <h2>Login to Access Your Inventory</h2>
+<div
+  class="bg-gradient-to-b from-purple-300 via-violet-600 to-blue-300 flex flex-col justify-center overflow-hidden items-center h-screen"
+>
+  <div
+    class="max-w-md w-full my-0 mx-auto text-center p-12 rounded-lg text-white bg-gradient-to-br from-indigo-600 via-cyan-700 to-blue-500 shadow-md"
+  >
+    <h2 class="text-2xl m-0 pt-11 font-bold mb-6">
+      Login to Access Your Inventory
+    </h2>
     <form [formGroup]="loginForm" (ngSubmit)="login()">
-      <div class="form-group">
-        <label for="username" [ngClass]="{ error: userNameOrEmailError }"
+      <div class="mb-4">
+        <label
+          class="block text-left mb-1.5"
+          for="username"
+          [ngClass]="{ 'text-red-500': userNameOrEmailError }"
           >Username/Email</label
         >
         <input
           type="text"
           id="username"
           name="username"
-          [ngClass]="{ 'error-input': userNameOrEmailError }"
+          [ngClass]="{
+            'border border-solid border-red-500 outline outline-1 outline-red-500':
+              userNameOrEmailError
+          }"
           placeholder="Enter your email or your username"
           formControlName="emailOrUsername"
+          class="border border-solid border-slate-300 rounded text-base p-2.5 w-full mt-2 box-border focus:outline-none focus:border-teal-400"
         />
-        <span *ngIf="userNameOrEmailError" class="error-message"
+        <span
+          *ngIf="userNameOrEmailError"
+          class="text-red-500 inline-block text-left mt-1.5 text-sm"
           >* {{ userNameOrEmailError }}</span
         >
       </div>
-      <div class="form-group">
-        <label for="password" [ngClass]="{ error: passwordError }"
+      <div class="mb-4">
+        <label
+          class="block text-left mb-1.5"
+          for="password"
+          [ngClass]="{ 'text-red-500': passwordError }"
           >Password:</label
         >
         <input
           type="password"
           formControlName="password"
-          [ngClass]="{ 'error-input': passwordError }"
+          [ngClass]="{
+            'border border-solid border-red-500 outline outline-1 outline-red-500':
+              passwordError
+          }"
           placeholder="Enter your password"
+          class="border border-solid border-slate-300 rounded text-base p-2.5 w-full mt-2 box-border focus:outline-none focus:border-teal-400"
         />
-        <span *ngIf="passwordError" class="error-message"
+        <span
+          *ngIf="passwordError"
+          class="text-red-500 inline-block text-left mt-1.5 text-sm"
           >* {{ passwordError }}</span
         >
       </div>
-      <div class="form-group">
+      <div class="mb-4">
         <button
-          class="loginButton"
+          class="px-2 py-3 bg-cyan-600 text-white w-3/4 border-none cursor-pointer rounded-3xl text-base transition-colors duration-300 ease-linear mt-8 enabled:bg-black enabled:text-white enabled:hover:bg-slate-700 disabled:bg-white disabled:text-black disabled:cursor-not-allowed"
           type="submit"
           [disabled]="loginForm.invalid"
         >
@@ -42,9 +66,13 @@
         </button>
       </div>
     </form>
-    <div class="signup-container">
+    <div class="mt-5 text-center text-white">
       <p>Don't have an account?</p>
-      <button type="button" class="signup-button" (click)="goToSignUp()">
+      <button
+        type="button"
+        class="signup-button px-2 py-3 bg-red-800 text-white w-3/4 border-none cursor-pointer rounded-3xl text-base transition-colors duration-300 ease-linear hover:bg-red-600"
+        (click)="goToSignUp()"
+      >
         Sign Up
       </button>
     </div>
