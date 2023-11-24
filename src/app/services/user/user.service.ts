@@ -50,13 +50,13 @@ export class UserService {
   }
 
   checkUserNameAvailability$(
-    userName: string
+    userName: string,
   ): Observable<{ exists: boolean }> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<{ exists: boolean }>(
       `${this.baseURL}/availability/userName`,
       { userName },
-      { headers }
+      { headers },
     );
   }
 
@@ -65,7 +65,7 @@ export class UserService {
     return this.http.post<{ exists: boolean }>(
       `${this.baseURL}/availability/email`,
       { email },
-      { headers }
+      { headers },
     );
   }
 }

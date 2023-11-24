@@ -29,27 +29,27 @@ export class ValidationService {
 
   sendEmailForValidation$(
     email: string,
-    fullName: string
+    fullName: string,
   ): Observable<ValidationEmailResponse> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body: ValidationEmailBody = { emailTo: email, fullName };
     return this.http.post<ValidationEmailResponse>(
       `${this.baseURL}/email`,
       body,
-      { headers }
+      { headers },
     );
   }
 
   validateCode$(
     code: string,
-    email: string
+    email: string,
   ): Observable<ValidationCodeResponse> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body: ValidationCodeBody = { code, email };
     return this.http.post<ValidationCodeResponse>(
       `${this.baseURL}/code`,
       body,
-      { headers }
+      { headers },
     );
   }
 }

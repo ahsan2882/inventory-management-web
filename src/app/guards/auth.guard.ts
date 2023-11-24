@@ -8,7 +8,7 @@ import { ValidationService } from '../services/validationService/validation.serv
 export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
-    private validationService: ValidationService
+    private validationService: ValidationService,
   ) {}
   canActivate(): boolean {
     if (this.validationService.validateLoginStatus()) {

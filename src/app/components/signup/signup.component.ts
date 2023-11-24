@@ -43,7 +43,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     Validators.minLength(8),
     Validators.maxLength(40),
     Validators.pattern(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d.*\d.*\d)(?=.*[-+_!@#$%^&*.,?]).{8,}$/
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d.*\d.*\d)(?=.*[-+_!@#$%^&*.,?]).{8,}$/,
     ),
   ]);
   confirmPasswordControl: FormControl = new FormControl('', [
@@ -62,7 +62,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private validationService: ValidationService,
-    private userService: UserService
+    private userService: UserService,
   ) {}
 
   ngOnDestroy(): void {
@@ -81,13 +81,13 @@ export class SignupComponent implements OnInit, OnDestroy {
         password: this.passwordControl,
         confirmPassword: this.confirmPasswordControl,
       },
-      [PasswordMatchValidator.match('password', 'confirmPassword')]
+      [PasswordMatchValidator.match('password', 'confirmPassword')],
     );
     this.codeValidationForm = new FormGroup(
       {
         codeControl: this.validationCodeControl,
       },
-      []
+      [],
     );
     this.subscriptions.add(
       this.signupForm
@@ -103,7 +103,7 @@ export class SignupComponent implements OnInit, OnDestroy {
           }),
           switchMap((value: string) => {
             return this.userService.checkUserNameAvailability$(value);
-          })
+          }),
         )
         .subscribe((value) => {
           if (value.exists) {
@@ -111,7 +111,7 @@ export class SignupComponent implements OnInit, OnDestroy {
           } else {
             this.usernameControl.setErrors(null);
           }
-        })
+        }),
     );
     this.subscriptions.add(
       this.signupForm
@@ -128,7 +128,7 @@ export class SignupComponent implements OnInit, OnDestroy {
           }),
           switchMap((value: string) => {
             return this.userService.checkEmailAvailability$(value);
-          })
+          }),
         )
         .subscribe((value) => {
           if (value.exists) {
@@ -136,7 +136,7 @@ export class SignupComponent implements OnInit, OnDestroy {
           } else {
             this.emailControl.setErrors(null);
           }
-        })
+        }),
     );
   }
 
@@ -158,7 +158,7 @@ export class SignupComponent implements OnInit, OnDestroy {
             }
             return of();
           }
-        })
+        }),
       )
       .subscribe((res: SignUpResponse) => {
         if (res.token) {
