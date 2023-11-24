@@ -15,15 +15,9 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
 
       - run: npm ci --force
       - run: npx prettier --write
-
-      - run: sudo apt-get update && sudo apt-get install -y pngquant
-      - name: Run pngquant
-        run: |
-          shopt -s globstar
-          pngquant -f --ext .png --skip-if-larger -- **/*.png
 
       - uses: autofix-ci/action@d3e591514b99d0fca6779455ff8338516663f7cc
