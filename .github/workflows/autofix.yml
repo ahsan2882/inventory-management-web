@@ -18,6 +18,6 @@ jobs:
           node-version: 20
 
       - run: npm ci --force
-      - run: npx prettier --write
+      - run: npx prettier --write .
 
       - uses: autofix-ci/action@d3e591514b99d0fca6779455ff8338516663f7cc
